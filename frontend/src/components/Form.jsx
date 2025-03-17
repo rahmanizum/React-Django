@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import "../styles/Form.css";
 
 import React from "react";
 
@@ -20,36 +21,32 @@ const Form = ({ route, method }) => {
       localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
       navigate("/");
     } catch (error) {
-      setLoading(false);
       console.log(error);
+      alert("Something went wrong");
     }
-    setLoading;
+    setLoading(false);
 
   };
   const name = method === "login" ? "Login " : "Register";
 
   return <form onSubmit={handleSubmit} className="form-container">
   <h1>{name}</h1>
-  <div>
-    <label htmlFor="username">Username</label>
-    <input
-      type="text"
-      id="username"
-      value={username}
-      onChange={(e) => setUsername(e.target.value)}
-    />
-  </div>
-  <div>
-    <label htmlFor="password">Password</label>
-    <input
-      type="password"
-      id="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
-  </div>
-  <button type="submit" disabled={loading}>
-    {loading ? "Loading..." : "Submit"}
+  <input
+    className="form-input"
+    type="text"
+    placeholder="Username"
+    value={username}
+    onChange={(e) => setUsername(e.target.value)}
+  />
+  <input
+    className="form-input"
+    type="password"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+  <button className="form-button" type="submit">
+    {loading ? "Loading..." : name}
   </button>
 </form>;
 };
